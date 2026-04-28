@@ -6,7 +6,7 @@ metadata:
 spec:
   description: "UBYS Test — QA erişimi"
   sourceRepos:
-    - https://gitlab.com/org/ubys-deployments.git
+    - https://github.com/yasinsunmaz/ubys-core-deployments.git
   destinations:
     - namespace: ubys-test
       server: https://kubernetes.default.svc

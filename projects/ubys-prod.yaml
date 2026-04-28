@@ -6,7 +6,7 @@ metadata:
 spec:
   description: "UBYS Production — kısıtlı erişim"
   sourceRepos:
-    - https://gitlab.com/org/ubys-deployments.git
+    - https://github.com/yasinsunmaz/ubys-core-deployments.git
   destinations:
     - namespace: ubys-prod
       server: https://kubernetes.default.svc

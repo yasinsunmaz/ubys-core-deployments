@@ -6,7 +6,7 @@ metadata:
 spec:
   description: "UBYS Staging — prod öncesi kontrol"
   sourceRepos:
-    - https://gitlab.com/org/ubys-deployments.git
+    - https://github.com/yasinsunmaz/ubys-core-deployments.git
   destinations:
     - namespace: ubys-staging
       server: https://kubernetes.default.svc

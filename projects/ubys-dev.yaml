@@ -6,7 +6,7 @@ metadata:
 spec:
   description: "UBYS Dev — serbest deploy"
   sourceRepos:
-    - https://gitlab.com/org/ubys-deployments.git
+    - https://github.com/yasinsunmaz/ubys-core-deployments.git
   destinations:
     - namespace: ubys-dev
       server: https://kubernetes.default.svc
