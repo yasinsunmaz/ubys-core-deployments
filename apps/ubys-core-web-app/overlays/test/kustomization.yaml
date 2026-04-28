@@ -9,7 +9,7 @@ bases:
 # CI pipeline bu satırı günceller: bump-image.sh
 images:
   - name: harbor.ikc.edu.tr/ubys-core-web-app/ubys-core-web-app:1.0.1
-    newTag: "dev-abc1234"
+    newTag: "1.0.1"
 
 configMapGenerator:
   - name: ubys-core-web-app-config
