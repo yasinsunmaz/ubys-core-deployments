@@ -51,14 +51,14 @@ spec:
           readinessProbe:
             httpGet:
               path: /health
-              port: 3000
+              port: 80
             initialDelaySeconds: 10
             periodSeconds: 5
             failureThreshold: 3
           livenessProbe:
             httpGet:
               path: /health
-              port: 3000
+              port: 80
             initialDelaySeconds: 20
             periodSeconds: 10
             failureThreshold: 3
