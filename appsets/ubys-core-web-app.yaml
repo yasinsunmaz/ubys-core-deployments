@@ -58,7 +58,7 @@ spec:
         notifications.argoproj.io/subscribe.on-sync-failed.slack: deploy-alerts
         notifications.argoproj.io/subscribe.on-health-degraded.slack: deploy-alerts
     spec:
-      project: "ubys-{{env}}"
+      project: "default"
       source:
         repoURL: https://github.com/yasinsunmaz/ubys-core-deployments.git
         targetRevision: HEAD
