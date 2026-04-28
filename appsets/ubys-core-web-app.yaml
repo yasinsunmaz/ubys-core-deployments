@@ -52,9 +52,9 @@ spec:
       name: "ubys-core-web-app-{{env}}"
       labels:
         app: ubys-core-web-app
-        env: "{{env}}"
+        env: {{env}}
       annotations:
-        argocd.argoproj.io/sync-wave: "{{wave}}"
+        argocd.argoproj.io/sync-wave: {{wave}}
         notifications.argoproj.io/subscribe.on-sync-failed.slack: deploy-alerts
         notifications.argoproj.io/subscribe.on-health-degraded.slack: deploy-alerts
     spec:
@@ -65,11 +65,11 @@ spec:
         path: "apps/ubys-core-web-app/overlays/{{env}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{namespace}}"
+        namespace: {{namespace}}
       syncPolicy:
         automated:
-          selfHeal: "{{selfHeal}}"
-          prune: "{{prune}}"
+          selfHeal: {{selfHeal}}
+          prune: {{prune}}
         syncOptions:
           - CreateNamespace=true
           - ApplyOutOfSyncOnly=true
@@ -81,7 +81,7 @@ spec:
             duration: 30s
             factor: 2
             maxDuration: 3m
-      revisionHistoryLimit: "{{maxHistory}}"
+      revisionHistoryLimit: {{maxHistory}}
       ignoreDifferences:
         - group: apps
           kind: Deployment
