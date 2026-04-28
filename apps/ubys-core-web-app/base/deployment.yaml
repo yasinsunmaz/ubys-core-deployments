@@ -21,10 +21,10 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: ubys-core-web-app
-          image: harbor.example.com/ubys/core-web-app:latest
+          image: harbor.ikc.edu.tr/ubys-core-web-app/ubys-core-web-app:1.0.1
           imagePullPolicy: Always
           ports:
-            - containerPort: 3000
+            - containerPort: 80
           env:
             - name: NODE_ENV
               valueFrom:

@@ -42,7 +42,7 @@ spec:
                   maxHistory: "20"
 
           - git:
-              repoURL: https://gitlab.com/org/ubys-deployments.git
+              repoURL: https://github.com/yasinsunmaz/ubys-core-deployments.git
               revision: HEAD
               directories:
                 - path: apps/ubys-core-web-app/overlays/*
@@ -60,7 +60,7 @@ spec:
     spec:
       project: "ubys-{{env}}"
       source:
-        repoURL: https://gitlab.com/org/ubys-deployments.git
+        repoURL: https://github.com/yasinsunmaz/ubys-core-deployments.git
         targetRevision: HEAD
         path: "apps/ubys-core-web-app/overlays/{{env}}"
       destination:
