@@ -1,0 +1,40 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ubys-staging
+
+bases:
+  - ../../base
+
+# CI pipeline bu satırı günceller: bump-image.sh
+images:
+  - name: harbor.example.com/ubys/core-web-app
+    newTag: "v1.0.0"
+
+configMapGenerator:
+  - name: ubys-core-web-app-config
+    behavior: merge
+    literals:
+      - NODE_ENV=staging
+      - API_BASE_URL=http://ubys-core-web-app.ubys-staging.svc.cluster.local
+      - LOG_LEVEL=warn
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: ubys-core-web-app
+      spec:
+        replicas: 2
+    target:
+      kind: Deployment
+      name: ubys-core-web-app
+
+resources:
+  - ingress.yaml
+  - hpa.yaml
+  - pdb.yaml
+
+commonLabels:
+  env: staging

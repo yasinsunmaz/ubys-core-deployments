@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ubys-test
+  namespace: argocd
+spec:
+  description: "UBYS Test — QA erişimi"
+  sourceRepos:
+    - https://gitlab.com/org/ubys-deployments.git
+  destinations:
+    - namespace: ubys-test
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: apps
+      kind: Deployment
+    - group: ""
+      kind: Service
+    - group: ""
+      kind: ConfigMap
+    - group: ""
+      kind: Secret
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: policy
+      kind: PodDisruptionBudget
+  roles:
+    - name: test-deployer
+      policies:
+        - p, proj:ubys-test:test-deployer, applications, sync, ubys-test/*, allow
+        - p, proj:ubys-test:test-deployer, applications, get,  ubys-test/*, allow
+      groups:
+        - ubys-qa
+        - ubys-developers
+  orphanedResources:
+    warn: true

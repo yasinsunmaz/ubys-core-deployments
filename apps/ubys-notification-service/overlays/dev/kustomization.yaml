@@ -1,0 +1,37 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ubys-dev
+
+bases:
+  - ../../base
+
+# CI pipeline bu satırı günceller: bump-image.sh
+images:
+  - name: harbor.example.com/ubys/notification-service
+    newTag: "dev-abc1234"
+
+configMapGenerator:
+  - name: ubys-notification-service-config
+    behavior: merge
+    literals:
+      - APP_ENV=dev
+      - SMTP_HOST=http://ubys-notification-service.ubys-dev.svc.cluster.local
+      - LOG_LEVEL=debug
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: ubys-notification-service
+      spec:
+        replicas: 1
+    target:
+      kind: Deployment
+      name: ubys-notification-service
+
+resources:
+
+commonLabels:
+  env: dev

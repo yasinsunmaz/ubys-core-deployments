@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ubys-staging
+  namespace: argocd
+spec:
+  description: "UBYS Staging — prod öncesi kontrol"
+  sourceRepos:
+    - https://gitlab.com/org/ubys-deployments.git
+  destinations:
+    - namespace: ubys-staging
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: apps
+      kind: Deployment
+    - group: ""
+      kind: Service
+    - group: ""
+      kind: ConfigMap
+    - group: ""
+      kind: Secret
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: policy
+      kind: PodDisruptionBudget
+  roles:
+    - name: staging-deployer
+      policies:
+        - p, proj:ubys-staging:staging-deployer, applications, sync, ubys-staging/*, allow
+        - p, proj:ubys-staging:staging-deployer, applications, get,  ubys-staging/*, allow
+      groups:
+        - ubys-devops
+        - ubys-lead-developers
+  orphanedResources:
+    warn: true

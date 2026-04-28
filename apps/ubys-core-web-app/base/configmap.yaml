@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ubys-core-web-app-config
+data:
+  NODE_ENV: "production"
+  API_BASE_URL: "http://ubys-core-web-app"
+  LOG_LEVEL: "info"

@@ -1,0 +1,38 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ubys-staging
+
+bases:
+  - ../../base
+
+# CI pipeline bu satırı günceller: bump-image.sh
+images:
+  - name: harbor.example.com/ubys/notification-service
+    newTag: "v1.0.0"
+
+configMapGenerator:
+  - name: ubys-notification-service-config
+    behavior: merge
+    literals:
+      - APP_ENV=staging
+      - SMTP_HOST=http://ubys-notification-service.ubys-staging.svc.cluster.local
+      - LOG_LEVEL=warn
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: ubys-notification-service
+      spec:
+        replicas: 2
+    target:
+      kind: Deployment
+      name: ubys-notification-service
+
+resources:
+  - pdb.yaml
+
+commonLabels:
+  env: staging

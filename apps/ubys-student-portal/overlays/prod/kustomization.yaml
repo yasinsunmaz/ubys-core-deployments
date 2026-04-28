@@ -1,0 +1,40 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ubys-prod
+
+bases:
+  - ../../base
+
+# CI pipeline bu satırı günceller: bump-image.sh
+images:
+  - name: harbor.example.com/ubys/student-portal
+    newTag: "v1.0.0"
+
+configMapGenerator:
+  - name: ubys-student-portal-config
+    behavior: merge
+    literals:
+      - APP_ENV=prod
+      - API_BASE_URL=http://ubys-student-portal.ubys-prod.svc.cluster.local
+      - LOG_LEVEL=error
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: ubys-student-portal
+      spec:
+        replicas: 3
+    target:
+      kind: Deployment
+      name: ubys-student-portal
+
+resources:
+  - ingress.yaml
+  - hpa.yaml
+  - pdb.yaml
+
+commonLabels:
+  env: prod

@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ubys-prod
+  namespace: argocd
+spec:
+  description: "UBYS Production — kısıtlı erişim"
+  sourceRepos:
+    - https://gitlab.com/org/ubys-deployments.git
+  destinations:
+    - namespace: ubys-prod
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: apps
+      kind: Deployment
+    - group: ""
+      kind: Service
+    - group: ""
+      kind: ConfigMap
+    - group: ""
+      kind: Secret
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: policy
+      kind: PodDisruptionBudget
+  roles:
+    - name: prod-deployer
+      policies:
+        - p, proj:ubys-prod:prod-deployer, applications, sync, ubys-prod/*, allow
+        - p, proj:ubys-prod:prod-deployer, applications, get,  ubys-prod/*, allow
+      groups:
+        - ubys-devops
+  orphanedResources:
+    warn: true

@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubys-notification-service
+  labels:
+    app: ubys-notification-service
+spec:
+  selector:
+    matchLabels:
+      app: ubys-notification-service
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: ubys-notification-service
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: ubys-notification-service
+          image: harbor.example.com/ubys/notification-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9000
+          env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: ubys-notification-service-config
+                  key: APP_ENV
+            - name: SMTP_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: ubys-notification-service-config
+                  key: SMTP_HOST
+            - name: APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: ubys-notification-service-secret
+                  key: APP_SECRET
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 9000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            failureThreshold: 3
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 5"]
+      imagePullSecrets:
+        - name: harbor-registry-secret
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - ubys-notification-service
+                topologyKey: kubernetes.io/hostname

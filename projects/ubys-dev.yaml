@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ubys-dev
+  namespace: argocd
+spec:
+  description: "UBYS Dev — serbest deploy"
+  sourceRepos:
+    - https://gitlab.com/org/ubys-deployments.git
+  destinations:
+    - namespace: ubys-dev
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: apps
+      kind: Deployment
+    - group: ""
+      kind: Service
+    - group: ""
+      kind: ConfigMap
+    - group: ""
+      kind: Secret
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: policy
+      kind: PodDisruptionBudget
+  roles:
+    - name: dev-deployer
+      policies:
+        - p, proj:ubys-dev:dev-deployer, applications, sync, ubys-dev/*, allow
+        - p, proj:ubys-dev:dev-deployer, applications, get,  ubys-dev/*, allow
+      groups:
+        - ubys-developers
+  orphanedResources:
+    warn: true

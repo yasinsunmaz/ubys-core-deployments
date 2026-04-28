@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ubys-core-web-app
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - ubys-core-web-app.staging.ubys.example.com
+      secretName: ubys-core-web-app-staging-tls
+  rules:
+    - host: ubys-core-web-app.staging.ubys.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ubys-core-web-app
+                port:
+                  number: 80
