@@ -11,33 +11,33 @@ spec:
               elements:
                 - env: dev
                   namespace: ubys-dev
-                  autoSync: "true"
-                  selfHeal: "true"
-                  prune: "true"
+                  autoSync: true
+                  selfHeal: true
+                  prune: true
                   wave: "1"
                   maxHistory: "5"
 
                 - env: test
                   namespace: ubys-test
-                  autoSync: "true"
-                  selfHeal: "true"
-                  prune: "false"
+                  autoSync: true
+                  selfHeal: true
+                  prune: false
                   wave: "2"
                   maxHistory: "5"
 
                 - env: staging
                   namespace: ubys-staging
-                  autoSync: "false"
-                  selfHeal: "false"
-                  prune: "false"
+                  autoSync: false
+                  selfHeal: false
+                  prune: false
                   wave: "3"
                   maxHistory: "10"
 
                 - env: prod
                   namespace: ubys-prod
-                  autoSync: "false"
-                  selfHeal: "false"
-                  prune: "false"
+                  autoSync: false
+                  selfHeal: false
+                  prune: false
                   wave: "4"
                   maxHistory: "20"
 

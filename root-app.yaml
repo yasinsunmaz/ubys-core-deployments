@@ -7,13 +7,13 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
-  sources:                    # ← source tekil değil, çoğul
+  sources:
     - repoURL: https://github.com/yasinsunmaz/ubys-core-deployments.git
       targetRevision: HEAD
-      path: projects          # ← önce project'ler
+      path: projects
     - repoURL: https://github.com/yasinsunmaz/ubys-core-deployments.git
       targetRevision: HEAD
-      path: appsets           # ← sonra appset'ler
+      path: appsets
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
