@@ -1,4 +1,4 @@
-apiVersion: argoproj.io/v1alpha1
+﻿apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ubys-root
@@ -7,10 +7,13 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
-  source:
-    repoURL: https://github.com/yasinsunmaz/ubys-core-deployments.git
-    targetRevision: HEAD
-    path: appsets
+  sources:                    # ← source tekil değil, çoğul
+    - repoURL: https://github.com/yasinsunmaz/ubys-core-deployments.git
+      targetRevision: HEAD
+      path: projects          # ← önce project'ler
+    - repoURL: https://github.com/yasinsunmaz/ubys-core-deployments.git
+      targetRevision: HEAD
+      path: appsets           # ← sonra appset'ler
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
