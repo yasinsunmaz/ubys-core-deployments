@@ -24,7 +24,7 @@ spec:
           image: harbor.ikc.edu.tr/ubys-core-web-app/ubys-core-web-app:1.0.1
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           env:
             - name: NODE_ENV
               valueFrom:

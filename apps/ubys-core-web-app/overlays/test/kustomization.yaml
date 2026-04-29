@@ -3,13 +3,10 @@ kind: Kustomization
 
 namespace: ubys-test
 
-bases:
-  - ../../base
-
 # CI pipeline bu satırı günceller: bump-image.sh
 images:
-  - name: harbor.ikc.edu.tr/ubys-core-web-app/ubys-core-web-app:1.0.1
-    newTag: "1.0.1"
+  - name: harbor.ikc.edu.tr/ubys-core-web-app/ubys-core-web-app
+    newTag: "1.0.0"
 
 configMapGenerator:
   - name: ubys-core-web-app-config
@@ -32,6 +29,7 @@ patches:
       name: ubys-core-web-app
 
 resources:
+  - ../../base  
   - ingress.yaml
 
 commonLabels:

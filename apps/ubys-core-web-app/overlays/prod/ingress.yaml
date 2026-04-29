@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ubys-core-web-app
+  namespace: ubys-core-web-app-prod
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
@@ -9,10 +10,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - ubys-core-web-app.ubys.example.com
+        - prod.ubys.com
       secretName: ubys-core-web-app-prod-tls
   rules:
-    - host: ubys-core-web-app.ubys.example.com
+    - host: prod.ubys.com
       http:
         paths:
           - path: /

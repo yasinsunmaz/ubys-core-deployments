@@ -2,13 +2,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ubys-core-web-app
+  namespace: ubys-core-web-app-test
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: "letsencrypt-staging"
 spec:
   ingressClassName: nginx
   rules:
-    - host: ubys-core-web-app.test.ubys.example.com
+    - host: test.ubys.com
       http:
         paths:
           - path: /
