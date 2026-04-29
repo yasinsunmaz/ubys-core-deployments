@@ -33,6 +33,7 @@ resources:
   - ingress.yaml
   - hpa.yaml
   - pdb.yaml
+  - secret.yaml
 
 commonLabels:
   env: staging
