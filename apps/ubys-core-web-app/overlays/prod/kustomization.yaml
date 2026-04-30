@@ -6,7 +6,7 @@ namespace: ubys-prod
 # CI pipeline bu satırı günceller: bump-image.sh
 images:
   - name: harbor.ikc.edu.tr/ubys-core-web-app/ubys-core-web-app
-    newTag: "1.0.0"
+    newTag: "1.0.1"
 
 configMapGenerator:
   - name: ubys-core-web-app-config
