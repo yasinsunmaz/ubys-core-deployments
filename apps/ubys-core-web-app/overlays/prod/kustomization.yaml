@@ -23,7 +23,7 @@ patches:
       metadata:
         name: ubys-core-web-app
       spec:
-        replicas: 3
+        replicas: 4
     target:
       kind: Deployment
       name: ubys-core-web-app
