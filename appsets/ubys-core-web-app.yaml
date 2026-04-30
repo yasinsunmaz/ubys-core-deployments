@@ -38,8 +38,8 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ApplyOutOfSyncOnly=true
-        # ignoreDifferences:
-        #   - group: ""
-        #     kind: Secret      
+        ignoreDifferences:
+          - group: ""
+            kind: Secret      
 
       revisionHistoryLimit: 5
